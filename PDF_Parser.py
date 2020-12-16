@@ -5,6 +5,7 @@ import fitz
 import re 
 
 class ParsePDF: 
+    
     # Constructor 
     def __init__(self, path, regex_pattern): 
         self.path = path 
@@ -61,10 +62,10 @@ class ParsePDF:
 # Main method to run script
 if __name__ == "__main__": 
 
-    # Input PDF file path
+    # File path of the unedited PDF document
     path = r"C:\Users\Eli\Desktop\Python\Scripts\{}.pdf"
 
-    # Regex pattern string to help search for values in the PDF to remove
+    # Regex pattern string to search for specified text to be removed from the PDF
     regex_pattern = r"(Nov(?:ember)?\s([1-9]|([12][0-9])|(3[01])),\s\d\d\d\d)"
 
     # Create instance of the ParsePDF class
