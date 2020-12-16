@@ -5,6 +5,7 @@ import fitz
 import re 
 
 class ParsePDF: 
+
     # Constructor 
     def __init__(self, path, regex_pattern): 
         self.path = path 
@@ -55,20 +56,20 @@ class ParsePDF:
         update_text = page.insertText(coordinates, todays_date, fontname = "helv", fontsize = 9.5)
         
         # Save the updated PDF file 
-        document.save(path.format("PDF_After"))    
+        document.save("Updated_PDF.pdf")    
 
 
-# Main method to run script
+# Main method
 if __name__ == "__main__": 
 
     # File path of the unedited PDF document
-    path = "C:/Users/Eli/Desktop/Python/Scripts/{}.pdf"
+    path = "Original_PDF.pdf"
 
     # Regex pattern string to search for specified text to be removed from the PDF
     regex_pattern = r"(Nov(?:ember)?\s([1-9]|([12][0-9])|(3[01])),\s\d\d\d\d)"
 
     # Create instance of the ParsePDF class
-    parse_pdf = ParsePDF(path.format("test"), regex_pattern) 
+    parse_pdf = ParsePDF(path, regex_pattern) 
 
     # Call edit_pdf_file method 
     parse_pdf.edit_pdf_file()
