@@ -6,9 +6,9 @@ import re
 
 class ParsePDF: 
     # Constructor 
-    def __init__(self, path, regex_date_pattern): 
+    def __init__(self, path, regex_pattern): 
         self.path = path 
-        self.regex_date_pattern = regex_date_pattern
+        self.regex_pattern = regex_pattern
 
 
     @staticmethod
@@ -20,8 +20,8 @@ class ParsePDF:
         # Iterate through each line of the PDF document
         for line in lines: 
             # Look for regex pattern match in each line
-            if re.search(regex_date_pattern, line, re.IGNORECASE): 
-                search = re.search(regex_date_pattern, line, re.IGNORECASE) 
+            if re.search(regex_pattern, line, re.IGNORECASE): 
+                search = re.search(regex_pattern, line, re.IGNORECASE) 
                 # Yield creates a generator to return values in between function iterations 
                 yield search.group(1) 
   
@@ -32,7 +32,6 @@ class ParsePDF:
         """
         # Open the PDF file for editing 
         document = fitz.open(self.path) 
-          
         # Iterate through each page of the PDF document 
         for page in document: 
             # _wrapContents is needed for fixing alignment issues with rect boxes in some cases where there is alignment issue 
@@ -48,12 +47,12 @@ class ParsePDF:
         # Define today's date as the variable to replace the deleted value
         # And set the PDF coordinates for placing the new value
         page = document[0]         
-        pdf_coordinates = fitz.Point(453, 58) 
-        curr_date = date.today()
-        todays_date = f"""{curr_date.strftime("%B")} {curr_date.day}, {curr_date.year}"""
+        coordinates = fitz.Point(453, 58) 
+        todays_date = date.today()
+        todays_date = f"""{todays_date.strftime("%B")} {todays_date.day}, {todays_date.year}"""
 
         # Set the new text in the PDF file
-        update_text = page.insertText(pdf_coordinates, todays_date, fontname = "helv", fontsize = 9.5)
+        update_text = page.insertText(coordinates, todays_date, fontname = "helv", fontsize = 9.5)
         
         # Save the updated PDF file 
         document.save(path.format("PDF_After"))    
@@ -66,10 +65,10 @@ if __name__ == "__main__":
     path = r"C:\Users\Eli\Desktop\Python\Scripts\{}.pdf"
 
     # Regex pattern string to help search for values in the PDF to remove
-    regex_date_pattern = r"(Nov(?:ember)?\s([1-9]|([12][0-9])|(3[01])),\s\d\d\d\d)"
+    regex_pattern = r"(Nov(?:ember)?\s([1-9]|([12][0-9])|(3[01])),\s\d\d\d\d)"
 
-    # Create an instance of the ParsePDF class
-    parse_pdf = ParsePDF(path.format("test"), regex_date_pattern) 
+    # Create instance of the ParsePDF class
+    parse_pdf = ParsePDF(path.format("test"), regex_pattern) 
 
-    # Call the edit_pdf_file method 
+    # Call edit_pdf_file method 
     parse_pdf.edit_pdf_file()
