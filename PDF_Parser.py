@@ -67,7 +67,7 @@ if __name__ == "__main__":
     # File path of the unedited PDF document
     path = config.Config.FILE_PATH
 
-    # Regex pattern string to search for specified text to be removed from the PDF
+    # Regex pattern string to search for matching text in the PDF document
     # In this example, text is replaced if it matches the date format "November DD, YYYY"
     regex_pattern = config.Config.REGEX_PATTERN
 
