@@ -1,8 +1,9 @@
 # Searches for a value in a PDF document to delete and replace with a new value
 
-from datetime import date
+import config
 import fitz 
 import re 
+from datetime import date
 
 class ParsePDF: 
 
@@ -13,23 +14,24 @@ class ParsePDF:
 
 
     @staticmethod
-    def find_pdf_text_to_delete(lines): 
+    def search_pdf_for_text_match(lines): 
         """
         Static method working independent of the class object.
-        Get all the lines of the PDF document.
+        Iterate through each line of the PDF document to search
+        for text that matches the regex pattern defined in config.py
         """
-        # Iterate through each line of the PDF document
         for line in lines: 
-            # Look for regex pattern match in each line
+            # Check if line matches the regex pattern
             if re.search(regex_pattern, line, re.IGNORECASE): 
                 search = re.search(regex_pattern, line, re.IGNORECASE) 
                 # Yield creates a generator to return values in between function iterations 
                 yield search.group(1) 
   
 
-    def edit_pdf_file(self): 
+    def replace_text_in_pdf(self): 
         """
-        Sets today's date in the PDF document.
+        Replaces the text matches in the PDF document
+        with today's date.
         """
         # Open the PDF file for editing 
         document = fitz.open(self.path) 
@@ -38,7 +40,7 @@ class ParsePDF:
             # _wrapContents is needed for fixing alignment issues with rect boxes in some cases where there is alignment issue 
             page._wrapContents() 
             # Gets the rect boxes which consists of the matching regex pattern
-            text_date = self.find_pdf_text_to_delete(page.getText("develop").split('\n')) 
+            text_date = self.search_pdf_for_text_match(page.getText("develop").split('\n')) 
 
             for data in text_date: 
                 areas = page.searchFor(data) 
@@ -48,28 +50,29 @@ class ParsePDF:
         # Define today's date as the variable to replace the deleted value
         # And set the PDF coordinates for placing the new value
         page = document[0]         
-        coordinates = fitz.Point(453, 58) 
+        coordinates = fitz.Point(440, 58) 
         todays_date = date.today()
         todays_date = f"""{todays_date.strftime("%B")} {todays_date.day}, {todays_date.year}"""
 
         # Set the new text in the PDF file
-        update_text = page.insertText(coordinates, todays_date, fontname = "helv", fontsize = 9.5)
+        update_text = page.insertText(coordinates, todays_date, fontname = "helv", fontsize = 16)
         
         # Save the updated PDF file 
-        document.save("Updated_PDF.pdf")    
+        document.save("pdf_updated.pdf")    
 
 
 # Main method
 if __name__ == "__main__": 
 
     # File path of the unedited PDF document
-    path = "Original_PDF.pdf"
+    path = config.Config.FILE_PATH
 
     # Regex pattern string to search for specified text to be removed from the PDF
-    regex_pattern = r"(Nov(?:ember)?\s([1-9]|([12][0-9])|(3[01])),\s\d\d\d\d)"
+    # In this example, text is replaced if it matches the date format "November DD, YYYY"
+    regex_pattern = config.Config.REGEX_PATTERN
 
     # Create instance of the ParsePDF class
     parse_pdf = ParsePDF(path, regex_pattern) 
 
     # Call edit_pdf_file method 
-    parse_pdf.edit_pdf_file()
+    parse_pdf.replace_text_in_pdf()
