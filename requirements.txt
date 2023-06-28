@@ -1,0 +1,13 @@
+autoflake
+autopeop8
+black
+dacite
+fitz
+flake8
+fpdf
+isort
+pdfplumber
+PyMuPDF
+reportlab
+toml
+yapf
