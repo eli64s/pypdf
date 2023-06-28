@@ -6,7 +6,7 @@
 pypdf
 </h1>
 <h3>◦ Empower your PDFs with <i>pypdf!</i></h3>
-<h3>◦ Developed with the software and tools listed below.</h3>
+<h3>◦ Developed with the software listed below:</h3>
 
 <p align="center">
     <img src="https://img.shields.io/badge/Markdown-000000.svg?stylee&logo=Markdown&logoColor=white" alt="Markdown" />
@@ -36,10 +36,9 @@ pypdf
 
 ---
 
-
 ## 📍 Overview
 
-This repository aims to provide a Python-based solution for searching, deleting, and replacing text in PDF documents. It utilizes the PyMuPDF and pdfplumber libraries to open and edit PDF files. The core functionalities include iterating through each page of the PDF, searching for text matches using a given regex pattern, and replacing them with specified content, such as today's date. This project offers a valuable tool for automating text manipulation in PDF documents, potentially saving significant time and effort for users dealing with large numbers of PDF files.
+The pypdf project provides a set of Python scripts for manipulating PDF documents. It includes functionalities such as extracting data using regular expressions, searching and replacing specific values, generating test PDFs with random dates and invoices, and applying formatting and linting to the codebase. This project aims to simplify PDF processing tasks by providing easy-to-use scripts that automate various PDF-related operations. Its value proposition lies in its ability to save time and effort by streamlining PDF manipulation workflows.
 
 ---
 
@@ -47,18 +46,16 @@ This repository aims to provide a Python-based solution for searching, deleting,
 
 Feature | Description |
 |-----|-----|
-| **🏗 Architecture** | The codebase follows a modular architecture, separating the main functionality of editing PDF documents into a separate file (`PDF_Parser.py`). The code also incorporates a configuration file (`config.py`) to define variables and settings. |
-| **📑 Documentation** | The codebase includes inline comments that explain the purpose and functionality of different sections of code. However, there is room for improvement in terms of providing more detailed documentation, such as function and class-level docstrings. |
-| **🧩 Dependencies** | The codebase relies on the PyMuPDF library to parse and edit PDF documents. The use of this library allows for powerful PDF manipulation capabilities. |
-| **♻️ Modularity** | The codebase demonstrates modularity by separating the main functionality into a dedicated file (`PDF_Parser.py`). This approach facilitates code organization and reusability. |
-| **✔️ Testing** | The codebase does not include any specific testing files or framework. It would benefit from the addition of unit tests to ensure the correctness of the implemented functionalities. |
-| **⚡️ Performance** | The codebase efficiently performs text search and replacement operations on PDF documents. However, without performance benchmarks or specific optimization techniques, it is challenging to evaluate the overall performance of the codebase. |
-| **🔒 Security** | The codebase does not appear to have any specific security considerations implemented. Given the nature of PDF documents, potential security vulnerabilities should be considered, such as input sanitization and handling potential malicious files. |
-| **🔀 Version Control** | The codebase is hosted on GitHub, providing version control capabilities for collaboration and managing changes over time. It is important to note that the repository does not include a `README.md` file or any guidelines for contributors. |
-| **🔌 Integrations** | The codebase seamlessly integrates the PyMuPDF library, enabling powerful PDF manipulation capabilities. Integration with other external services or APIs is not present in the provided codebase. |
-| **📈 Scalability** | The codebase does not explicitly address scalability concerns. However, since it primarily focuses on PDF text editing, it can easily be extended to support additional PDF manipulation functionalities, such as adding or removing pages, images, or annotations. |
-
-Overall, the codebase demonstrates a modular architecture with a focus on PDF text editing. While it lacks comprehensive documentation, testing, and security considerations, it provides a solid foundation for extending the functionality and integrating with other systems or libraries.
+| **🏗 Architecture** | The codebase follows a modular architecture with separate files for different functionalities, such as PDF parsing, searching, and creating. It also uses a configuration file to define the application's settings, enhancing flexibility and maintainability. |
+| **📑 Documentation** | The codebase lacks comprehensive documentation. While some functions and classes have inline comments, there is no overall documentation explaining the codebase's purpose, usage, or high-level architecture. Improved documentation would enhance understandability and ease of maintenance. |
+| **🧩 Dependencies** | The codebase relies on several external libraries, such as pdfplumber, fitz, ReportLab, and PyPDF. These libraries provide powerful PDF processing features and save development effort. However, the codebase does not include a detailed explanation of their usage or the reasons behind their selection. |
+| **♻️ Modularity** | The codebase demonstrates good modularity by separating functionality into different files. Each file handles a specific aspect of PDF processing, such as parsing, searching, or creating. However, there could be room for further modularization, such as extracting common utility functions into a shared module. |
+| **✔️ Testing** | The codebase lacks comprehensive unit tests. While it includes some test files, their coverage is limited. Further testing, including unit tests for individual functions and integration tests for complete scenarios, would help ensure code correctness and maintainability. |
+| **⚡️ Performance** | It is difficult to assess performance without specific requirements or benchmarks. However, the codebase makes use of efficient libraries for PDF processing, such as pdfplumber and fitz, which are known for their performance. The codebase would benefit from performance profiling and optimization if performance issues arise. |
+| **🔒 Security** | There are no specific security measures mentioned in the codebase. It is important to handle user input, particularly regular expressions and file paths, with caution to mitigate potential security vulnerabilities like path traversal or code injection attacks. |
+| **🔀 Version Control** | The codebase is hosted on GitHub, utilizing the Git version control system. This enables collaboration among developers, code version management, and the ability to roll back changes if necessary. The repository contains multiple commits, indicating ongoing development and iterative improvements. |
+| **🔌 Integrations** | There are no explicit integrations mentioned in the codebase. However, the codebase could be integrated with other systems or APIs to enhance functionality, such as fetching PDFs from external sources or integrating with document management systems. |
+| **📈 Scalability** | The codebase does not exhibit explicit scalability features, such as distributed processing or load balancing. However, its modular architecture allows for adding new functionality or extending existing features without significant code changes. It could benefit from scalability considerations if the application's requirements demand it in the future. |
 
 ---
 
@@ -68,15 +65,26 @@ Overall, the codebase demonstrates a modular architecture with a focus on PDF te
 
 ```bash
 repo
-├── PDF_Parser.py
+├── Makefile
 ├── README.md
-├── __pycache__
-│   └── config.cpython-37.pyc
-├── config.py
-├── pdf_original.pdf
-└── pdf_updated.pdf
+├── conf
+│   └── conf.toml
+├── docs
+│   ├── example.pdf
+│   ├── pdf_input.pdf
+│   ├── pdf_updated.pdf
+│   └── test_invoice.pdf
+├── requirements.txt
+├── scripts
+│   └── clean.sh
+└── src
+    ├── conf.py
+    ├── create_pdf_test_dates.py
+    ├── create_pdf_test_invoice.py
+    ├── pdf_parse_by_regex.py
+    └── pdf_search_and_replace.py
 
-2 directories, 6 files
+5 directories, 14 files
 ```
 
 ---
@@ -85,10 +93,29 @@ repo
 
 <details closed><summary>Root</summary>
 
-| File          | Summary                                                                                                                                                                                                                                                                                                                                                                                                                  | Module        |
-|:--------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------|
-| PDF_Parser.py | The provided code snippet allows for the search, deletion, and replacement of text in a PDF document based on a given regex pattern. It utilizes the PyMuPDF library to open and edit the PDF file. The `replace_text_in_pdf` method iterates through each page of the PDF, searches for text matches using the regex pattern, and replaces them with today's date. The updated PDF is then saved as "pdf_updated.pdf".  | PDF_Parser.py |
-| config.py     | The provided code snippet represents a configuration file for a PDF document editing application. It includes two core functionalities. First, it defines the file path for the original PDF document to be edited. Second, it sets a regular expression pattern to search for specific text patterns in the document, in this case, dates in the format "November DD, YYYY", which will be replaced by the application. | config.py     |
+| File     | Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Module   |
+|:---------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------|
+| Makefile | The code snippet provides a Makefile with several functionalities.-The `help` target displays a list of commands and their descriptions.-The `style` target applies formatting and linting to the code using tools like autoflake, autopep8, black, flake8, isort, and yapf.-The `clean` target calls the `style` target and then executes a clean.sh script to remove unnecessary files.-The `conda` target creates a conda environment named `pypdf` with Python 3.9 and installs the dependencies specified in requirements.txt.-The `venv` target creates a virtual environment named `pypdf`, activates it, and installs the dependencies specified in requirements.txt. | Makefile |
+
+</details>
+
+<details closed><summary>Scripts</summary>
+
+| File     | Summary                                                                                                                                                                                                                                                                                                                     | Module           |
+|:---------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|
+| clean.sh | This code snippet is a bash script that performs various clean-up tasks. It removes backup files, Python cache files, cache directories, VS Code settings, build artifacts, pytest cache, benchmarks, and specific files. This script helps maintain a clean working environment by removing unnecessary files and folders. | scripts/clean.sh |
+
+</details>
+
+<details closed><summary>Src</summary>
+
+| File                       | Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Module                         |
+|:---------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------|
+| pdf_parse_by_regex.py      | The provided code snippet extracts data from a PDF file using regular expressions. It takes in a PDF file, name pattern, and amount pattern as input, and returns a dictionary mapping names to their corresponding amounts. It uses the pdfplumber library to open the PDF file, and then applies the given patterns to extract the relevant data. Finally, it prints the parsed data in a formatted manner.                                                                                                                   | src/pdf_parse_by_regex.py      |
+| conf.py                    | This code snippet defines a configuration file for an application. It uses the `dataclasses` module to define three data classes: `PathsConfig` for paths configuration, `RegexConfig` for regex configuration, and `AppConfig` for overall application configuration. The `read_config_file` function reads the configuration file in TOML format and returns a populated `AppConfig` object.                                                                                                                                  | src/conf.py                    |
+| pdf_search_and_replace.py  | The provided code is a Python script that searches for a specific value in a PDF document, identified by a regular expression pattern, and replaces it with a new value. It utilizes the `fitz` library to open and manipulate PDF files, specifically applying redactions to remove the old value and inserting the new value at a specific location on the PDF page. The script reads the configuration from a TOML file and performs the replacement on the specified input PDF, saving the modified PDF to the output path. | src/pdf_search_and_replace.py  |
+| create_pdf_test_dates.py   | This code snippet generates a PDF document with random dates displayed on each page. It uses the ReportLab library to create the PDF and the datetime module to generate random dates. The add_random_dates_to_page() function is called twice to add dates to the first and second pages of the PDF. The resulting PDF is saved as "docs/example.pdf".                                                                                                                                                                         | src/create_pdf_test_dates.py   |
+| create_pdf_test_invoice.py | The provided code snippet creates a test PDF document with a random invoice. It uses the PyPDF class, which is a subclass of the FPDF library's FPDF class. The PyPDF class includes methods for setting up the header and footer of the PDF document, generating the invoice content, and saving the PDF to the specified output path. The generated invoice includes random names and amounts, which are added to a table in the PDF document.                                                                                | src/create_pdf_test_invoice.py |
 
 </details>
 
@@ -122,7 +149,7 @@ pip install -r requirements.txt
 ### 🎮 Using pypdf
 
 ```sh
-python parse_pdf_regex.py
+python3 src/pdf_parse_by_regex.py
 ```
 
 ### 🧪 Running Tests
@@ -136,7 +163,7 @@ pytest
 ## 🗺 Roadmap
 
 - [ ] Implement more PDF parsing functionalities.
-- [ ] Add unit tests.
+- [ ] Add unit tests for each module.
 
 ---
 
